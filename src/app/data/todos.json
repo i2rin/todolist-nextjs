@@ -1,16 +1,24 @@
 {
   "tasks": [
     {
-      "id": "ca11ae36-ae36-4df3-9e90-f664d527f405",
-      "text": "デベシス"
+      "id": "a0c6936d-74f1-4d7a-89ef-fc4e69b0af4b",
+      "text": "chakuraUI導入"
     },
     {
-      "id": "bcdcb758-b03c-4343-8eea-9f4b2ac0a4f1",
-      "text": "人工知能"
+      "id": "33facad8-4316-4854-94c1-13b0b6419471",
+      "text": "引き継ぎ資料作る"
     },
     {
-      "id": "1e75a027-1f1b-478f-a7c2-d0df277d208a",
-      "text": "知的"
+      "id": "eeb529e7-f89e-46ab-b1dd-7b98c21e08d9",
+      "text": "メール返信"
+    },
+    {
+      "id": "d4f5f1a5-96ac-403d-a613-3812d27d055e",
+      "text": "二瓶くん共有"
+    },
+    {
+      "id": "c2f3e6c2-af83-4f4a-9d95-d0d0b769064b",
+      "text": "a"
     }
   ]
 }
