@@ -19,24 +19,26 @@ const AddTask = () => {
 
   return (
     <form className = "mb-4 space-y-3" onSubmit={handleSubmit}>
+      <div className = "flex space-x-3">
         <input 
             type = "text"
-            className = "w-full border px-4 py-2 rounded-lg focus:ourline-none fucus:boder-blue-400" 
+            className = "flex-1 border px-4 py-2 rounded-lg focus:ourline-none fucus:boder-blue-400" 
             onChange = {(e: ChangeEvent<HTMLInputElement>) => setTaskTitle(e.target.value)}
             value = {taskTitle}
          />
         <input 
             type = "date"
-            value = {deadlineDate}
+            className = "flex-2 border px-4 py-2 rounded-lg focus:ourline-none fucus:boder-blue-400"
             onChange={(e: ChangeEvent<HTMLInputElement>) => setDeadlineDate(e.target.value)}
-            className = "w-full border px-4 py-2 rounded-lg focus:ourline-none fucus:boder-blue-400"
+            value = {deadlineDate}
         />
         <input
             type = "time"
-            value = {deadlineTime}
+            className = "flex-1 border px-4 py-2 rounded-lg focus:ourline-none fucus:boder-blue-400"
             onChange={(e: ChangeEvent<HTMLInputElement>) => setDeadlineTime(e.target.value)}
-            className = "w-full border px-4 py-2 rounded-lg focus:ourline-none fucus:boder-blue-400"
+            value = {deadlineTime}
         />
+        </div>
         <button className="w-full px-4 py-2 text-white bg-blue-500 rounded transform hover:bg-blue-400 hover:scale-95 duration-200">Add Task</button>
     </form>
   )  
