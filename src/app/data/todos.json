@@ -1,25 +1,12 @@
 {
   "tasks": [
     {
-      "id": "fea06451-71ad-4aa0-a50d-f10c40c0809f",
-      "text": "計算機"
-    },
-    {
-      "id": "ca11ae36-ae36-4df3-9e90-f664d527f405",
-      "text": "デベシス"
-    },
-    {
-      "id": "bcdcb758-b03c-4343-8eea-9f4b2ac0a4f1",
-      "text": "人工知能"
+      "text": "人工知能",
+      "id": "bcdcb758-b03c-4343-8eea-9f4b2ac0a4f1"
     },
     {
       "id": "5201ab02-31cb-48ef-9019-632b5652f41f",
       "text": "すしろー",
-      "date": null
-    },
-    {
-      "id": "488aef89-685c-4b46-8ad3-bcc924358921",
-      "text": "a",
       "date": null
     }
   ]

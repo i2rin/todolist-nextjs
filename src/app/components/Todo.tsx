@@ -34,8 +34,7 @@ const Todo = ({ task }: TodoProps) => {
         setIsEditing(false);
     };
 
-    
-  return (
+ return (
    <li 
         key = {task.id} 
         className = "flex justify-between p-4 bg-white border-1-4 border-blue-500 rounded-shadow"
@@ -55,12 +54,18 @@ const Todo = ({ task }: TodoProps) => {
 
      <div>
        {isEditing ? (
-      <button className = "text-white bg-blue-300" onClick={handleSave}>save</button > 
+      <button className = "text-white bg-blue-300 p-2 mr-2 border border-blue-500 rounded " onClick={handleSave}>
+        save
+        </button > 
         ) : (
-      <button className = "text-red-500 mr-3" onClick = {handleDelete}>delete</button>
-        )}
-      <button className="text-green-500 mr-3" onClick={handleEdit}>edit</button>
-     </div>
+        <button className="text-green-500 border border-green-500 rounded rounded p-2" onClick={handleEdit}>
+        edit
+        </button>
+        )}  
+         <button className = "text-red-500 border border-red-500 rounded p-2 mr-2" onClick = {handleDelete}>
+            delete
+        </button>
+        </div>
     </li> 
   )
 }
