@@ -55,9 +55,9 @@ const Todo = ({ task }: TodoProps) => {
 
      <div>
        {isEditing ? (
-      <button className = "text-blue-500 mr-3" onClick={handleSave}>save</button > 
+      <button className = "text-white bg-blue-300" onClick={handleSave}>save</button > 
         ) : (
-      <button className = "text-red-500" onClick = {handleDelete}>delete</button>
+      <button className = "text-red-500 mr-3" onClick = {handleDelete}>delete</button>
         )}
       <button className="text-green-500 mr-3" onClick={handleEdit}>edit</button>
      </div>
