@@ -49,7 +49,10 @@ const Todo = ({ task }: TodoProps) => {
                 }
                 className = "mr-2 py-1 px-2 rounded border-gray-400 border"/>
             ) : (
+            <React.Fragment key = {task.id}>
             <span>{task.text}</span>
+            <span>{new Date(task.date).toLocaleString()}</span>
+         </React.Fragment>   
         )}
 
      <div>
@@ -66,7 +69,8 @@ const Todo = ({ task }: TodoProps) => {
             delete
         </button>
         </div>
-    </li> 
+ 
+   </li> 
   )
 }
 
