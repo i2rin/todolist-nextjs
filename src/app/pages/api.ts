@@ -22,13 +22,13 @@ export const addTodo = async (todo: Task): Promise<Task[]> => {
     return res;
 }
 
-export const editTodo = async (id: string, newText: string): Promise<Task[]> => {
+export const editTodo = async (id: string, newText: string, newDate: Date): Promise<Task[]> => {
     const jsonData = await fetch(`http://localhost:3001/tasks/${id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ text: newText }),
+        body: JSON.stringify({ text: newText, date: newDate }),
     });
     const res = jsonData.json();
 
