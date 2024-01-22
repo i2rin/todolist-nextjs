@@ -11,7 +11,7 @@ const AddTask = () => {
     const handleSubmit = async (e:FormEvent) => {
         e.preventDefault();
         const deadline = new Date(`${deadlineDate}T${deadlineTime}`);
-        await addTodo({ id: uuidv4(), text: taskTitle, date: deadline});
+        await addTodo({ id: uuidv4(), text: taskTitle, date: deadline, time: deadlineTime});
         setTaskTitle("");
         setDeadlineDate("");
         setDeadlineTime("");
