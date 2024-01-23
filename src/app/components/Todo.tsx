@@ -1,41 +1,10 @@
 "use client"; import{ Task } from '../pages/types';
 import React, { useEffect, useRef, useState } from 'react';
-import { deleteTodo, editTodo } from '../pages/api';
-
-
+import { deleteTodo, editTodo, formatDate, formatTime } from '../pages/api';
 
 interface TodoProps {
     task: Task;
 }
-
-const formatTime = (date: Date | string) : string => {
-    if (!date) return '';
-
-    const d = new Date(date);
-    let hours = '' + d.getHours();
-    let minutes = '' + d.getMinutes();
-
-    if (hours.length < 2) hours = '0' + hours;
-    if (minutes.length < 2) minutes = '0' + minutes;
-    return `${hours}:${minutes}`;
-};
-
-// Date オブジェクトを YYYY-MM-DD 形式の文字列に変換
-const formatDate = (date : Date | string) : string => { 
-    if (!date) return '' 
-    const d = new Date(date);
-    let month = '' + (d.getMonth() + 1);
-    let day = '' + d.getDate();
-    const year = d.getFullYear();
-
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
-
-    return [year, month, day].join('-');
-};
-
 
 const Todo = ({ task }: TodoProps) => {
     const ref = useRef<HTMLInputElement>(null);
@@ -59,17 +28,17 @@ const Todo = ({ task }: TodoProps) => {
     };
 
     const handleSave = async () => {
-        await editTodo(task.id, editedTaskTitle, editedTaskDate, editedTaskTime);
+        const dateTimeString = `${editedTaskDate}T${editedTaskTime}`;
+        await editTodo(task.id, editedTaskTitle, dateTimeString);
         setIsEditing(false);
     };
+
 
     const handleDelete = async() => {
         await deleteTodo(task.id);
         setIsEditing(false);
     };
     
-
-
     return (
       <li className = "flex justify-between p-4 bg-white border-1-4 border-blue-500 rounded-shadow">
            {isEditing ? (

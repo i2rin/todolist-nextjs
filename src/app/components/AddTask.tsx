@@ -1,21 +1,36 @@
 "use client";
-import { addTodo } from "../pages/api";
+import { format } from "path";
+import { addTodo, formatDate } from "../pages/api";
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import {v4 as uuidv4} from "uuid";
 
 const AddTask = () => {
     const [taskTitle, setTaskTitle] = useState("");
-    const [deadlineDate, setDeadlineDate] = useState("");
     const [deadlineTime, setDeadlineTime] = useState("");
-    
-    const handleSubmit = async (e:FormEvent) => {
+    const [deadlineDate, setDeadlineDate] = useState<Date | null>(null);
+
+
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        const deadline = new Date(`${deadlineDate}T${deadlineTime}`);
-        await addTodo({ id: uuidv4(), text: taskTitle, date: deadline, time: deadlineTime});
-        setTaskTitle("");
-        setDeadlineDate("");
-        setDeadlineTime("");
+        // 日付と時間の検証
+        if (!taskTitle || !deadlineDate || !deadlineTime) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        const deadline = `${deadlineDate}T${deadlineTime}`;
+        try {
+            await addTodo({ id: uuidv4(), text: taskTitle, date: deadlineDate, time: deadlineTime });
+            setTaskTitle("");
+            setDeadlineDate;
+            setDeadlineTime("");
+        } catch (error) {
+            console.error("Error adding task:", error);
+            // 適切なエラーメッセージを表示
+        }
     };
+
+    // コンポーネントのレンダリング部分は変更なし
 
   return (
     <form className = "mb-4 space-y-3" onSubmit={handleSubmit}>
@@ -29,8 +44,8 @@ const AddTask = () => {
         <input 
             type = "date"
             className = "flex-2 border px-4 py-2 rounded-lg focus:ourline-none fucus:boder-blue-400"
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setDeadlineDate(e.target.value)}
-            value = {deadlineDate}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setDeadlineDate(e.target.value ? new Date(e.target.value) : null )}
+            value = {deadlineDate ? formatDate(deadlineDate) : ""} 
         />
         <input
             type = "time"
