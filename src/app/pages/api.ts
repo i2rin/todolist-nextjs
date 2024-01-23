@@ -39,8 +39,7 @@ export const getAllTodos = async (): Promise<Task[]> => {
     return res;
 }
 
-export const addTodo = async (todo: Task): Promise<Task[]> => {
-    const dateTimeString = `${formatDate(todo.date)}T${formatTime(todo.time)}`;
+export const addTodo = async (todo:Task): Promise<Task[]> => {
     const jsonData = await fetch(`http://localhost:3001/tasks`, {
         method: "POST",
         headers: {
@@ -48,7 +47,8 @@ export const addTodo = async (todo: Task): Promise<Task[]> => {
         },
         body: JSON.stringify({
             text: todo.text,
-            date: dateTimeString, // 変換された日時データ
+            date: todo.date, // 変換された日時データ
+            time: todo.time, 
         })
     });
     const res = jsonData.json();
