@@ -1,36 +1,29 @@
 "use client";
-import { format } from "path";
 import { addTodo, formatDate } from "../pages/api";
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import {v4 as uuidv4} from "uuid";
 
 const AddTask = () => {
     const [taskTitle, setTaskTitle] = useState("");
+    const [deadlineDate, setDeadlineDate] = useState<Date | null>(new Date());
     const [deadlineTime, setDeadlineTime] = useState("");
-    const [deadlineDate, setDeadlineDate] = useState<Date | null>(null);
-
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         // 日付と時間の検証
-        if (!taskTitle || !deadlineDate || !deadlineTime) {
-            alert("Please fill in all fields.");
-            return;
-        }
 
-        const deadline = `${deadlineDate}T${deadlineTime}`;
-        try {
-            await addTodo({ id: uuidv4(), text: taskTitle, date: deadlineDate, time: deadlineTime });
-            setTaskTitle("");
-            setDeadlineDate;
-            setDeadlineTime("");
-        } catch (error) {
-            console.error("Error adding task:", error);
-            // 適切なエラーメッセージを表示
-        }
+        const deadlineDateString = deadlineDate ? formatDate(deadlineDate) : '';
+        const newTask ={ 
+            id: uuidv4(),
+            text: taskTitle,
+            date: new Date(deadlineDateString),
+            time: deadlineTime
+        }; 
+        await addTodo (newTask);     
+        setTaskTitle("");
+        setDeadlineDate(null);
+        setDeadlineTime("");
     };
-
-    // コンポーネントのレンダリング部分は変更なし
 
   return (
     <form className = "mb-4 space-y-3" onSubmit={handleSubmit}>
