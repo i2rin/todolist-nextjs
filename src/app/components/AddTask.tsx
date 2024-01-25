@@ -1,27 +1,26 @@
 "use client";
-import { addTodo, formatDate } from "../pages/api";
+import { addTodo } from "../pages/api";
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import {v4 as uuidv4} from "uuid";
 
 const AddTask = () => {
     const [taskTitle, setTaskTitle] = useState("");
-    const [deadlineDate, setDeadlineDate] = useState<Date | null>(new Date());
+    const [deadlineDate, setDeadlineDate] = useState<Date>(new Date());
     const [deadlineTime, setDeadlineTime] = useState("");
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         // 日付と時間の検証
 
-        const deadlineDateString = deadlineDate ? formatDate(deadlineDate) : '';
         const newTask ={ 
             id: uuidv4(),
             text: taskTitle,
-            date: new Date(deadlineDateString),
+            date: new Date,
             time: deadlineTime
         }; 
         await addTodo (newTask);     
         setTaskTitle("");
-        setDeadlineDate(null);
+        setDeadlineDate(new Date());
         setDeadlineTime("");
     };
 
@@ -37,8 +36,11 @@ const AddTask = () => {
         <input 
             type = "date"
             className = "flex-2 border px-4 py-2 rounded-lg focus:ourline-none fucus:boder-blue-400"
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setDeadlineDate(e.target.value ? new Date(e.target.value) : null )}
-            value = {deadlineDate ? formatDate(deadlineDate) : ""} 
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                setDeadlineDate(new Date(e.target.value));
+                console.log(`${deadlineDate.getFullYear()}-${deadlineDate.getMonth() + 1}-${deadlineDate.getDate()}`);
+            }}
+            value = {`${deadlineDate.getFullYear()}-${deadlineDate.getMonth() + 1} -${deadlineDate.getDate()}`}
         />
         <input
             type = "time"

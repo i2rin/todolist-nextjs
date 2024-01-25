@@ -38,9 +38,8 @@ const Todo = ({ task }: TodoProps) => {
     const ref = useRef<HTMLInputElement>(null);
     const [isEditing, setIsEditing] = useState(false);
     const [editedTaskTitle, setEditedTaskTitle] = useState(task.text);
-    const [editedTaskDate, setEditedTaskDate] = useState(formatDate(task.date));
+    const [editedTaskDate, setEditedTaskDate] = useState(task.date);
     const [editedTaskTime, setEditedTaskTime] = useState(formatTime(task.time));
-    const editedDateTimeString = `${editedTaskDate}T${editedTaskTime}`;
 
     useEffect(() => {
         if (isEditing) 
@@ -52,13 +51,13 @@ const Todo = ({ task }: TodoProps) => {
     const handleEdit = async() => {
         setIsEditing(true);
         setEditedTaskTitle(task.text);
-        setEditedTaskDate(formatDate(task.date));
+        setEditedTaskDate(task.date);
         setEditedTaskTime(formatTime(task.time));
     };
 
 
     const handleSave = async () => {
-        await editTodo(task.id, editedTaskTitle, editedDateTimeString);
+        await editTodo(task.id, editedTaskTitle, editedTaskDate, editedTaskTime);
         setIsEditing(false);
     };
 
@@ -69,7 +68,10 @@ const Todo = ({ task }: TodoProps) => {
     };
     
     return (
-      <li className = "flex justify-between p-4 bg-white border-1-4 border-blue-500 rounded-shadow">
+        <li 
+            key = {task.id}
+            className = "flex justify-between p-4 bg-white border-1-4 border-blue-500 rounded-shadow"
+        >
            {isEditing ? (
                <React.Fragment>
                    <input 
@@ -77,21 +79,25 @@ const Todo = ({ task }: TodoProps) => {
                         type="text" 
                         value = {editedTaskTitle}
                         onChange = {
-                            (e) => setEditedTaskTitle(e.target.value)
+                            (e: React.ChangeEvent<HTMLInputElement>) => setEditedTaskTitle(e.target.value)
                         }
                         style = {{ width: '150px' ,borderRadius: '10px' }}  
                    />
                    <input 
                         type="date" 
                         value = {formatDate(editedTaskDate)}
-                        onChange = {(e) => setEditedTaskDate(e.target.value)}
+                        onChange = {
+                            (e: React.ChangeEvent<HTMLInputElement>) => setEditedTaskDate(e.target.value ? new Date(e.target.value) : new Date())
+                        }
                         className = "mr-2 py-1 px-2 rounded border-gray-400 border"
                         style = {{ width: '150px' }}
                    /> 
                    <input
                         type="time" 
                         value={formatTime(editedTaskTime)}
-                        onChange={(e) => setEditedTaskTime(e.target.value)}
+                        onChange={
+                            (e: React.ChangeEvent<HTMLInputElement>) => setEditedTaskTime(e.target.value)
+                        }
                         className = "mr-2 py-1 px-2 rounded border-gray-400 border"
                         style={{ width: '150px' }}
                    />
