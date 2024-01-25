@@ -5,36 +5,36 @@ import { deleteTodo, editTodo } from '../pages/api';
 interface TodoProps {
     task: Task;
 }
+//Date オブジェクトを YYYY-MM-DD 形式の文字列に変換
+export const formatDate = (date : Date | string) : string => { 
+    if (!date) return '' 
+    const d = new Date(date);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    const year = d.getFullYear();
 
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+};
+
+export const formatTime = (date: Date | string) : string => {
+    if (!date) return '';
+
+    const d = new Date(date);
+    let hours = '' + d.getHours();
+    let minutes = '' + d.getMinutes();
+
+    if (hours.length < 2) hours = '0' + hours;
+    if (minutes.length < 2) minutes = '0' + minutes;
+    return `${hours}:${minutes}`;
+};
+ 
 const Todo = ({ task }: TodoProps) => {
-// Date オブジェクトを YYYY-MM-DD 形式の文字列に変換
-    const formatDate = (date : Date | string) : string => { 
-        if (!date) return '' 
-        const d = new Date(date);
-        let month = '' + (d.getMonth() + 1);
-        let day = '' + d.getDate();
-        const year = d.getFullYear();
-    
-        if (month.length < 2) 
-            month = '0' + month;
-        if (day.length < 2) 
-            day = '0' + day;
-    
-        return [year, month, day].join('-');
-    };
-    
-    const formatTime = (date: Date | string) : string => {
-        if (!date) return '';
-    
-        const d = new Date(date);
-        let hours = '' + d.getHours();
-        let minutes = '' + d.getMinutes();
-    
-        if (hours.length < 2) hours = '0' + hours;
-        if (minutes.length < 2) minutes = '0' + minutes;
-        return `${hours}:${minutes}`;
-    };
-    
+   
     const ref = useRef<HTMLInputElement>(null);
     const [isEditing, setIsEditing] = useState(false);
     const [editedTaskTitle, setEditedTaskTitle] = useState(task.text);
@@ -85,7 +85,8 @@ const Todo = ({ task }: TodoProps) => {
                    />
                    <input 
                         type="date" 
-                        value = {formatDate(editedTaskDate)}
+                        //value = {formatDate(editedTaskDate)}
+                        value = {editedTaskDate.toString()}
                         onChange = {
                             (e: React.ChangeEvent<HTMLInputElement>) => setEditedTaskDate(e.target.value ? new Date(e.target.value) : new Date())
                         }
