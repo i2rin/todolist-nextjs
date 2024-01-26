@@ -33,6 +33,10 @@ export const formatTime = (date: Date | string) : string => {
     return `${hours}:${minutes}`;
 };
  
+const formatDateOnly = (dateStr: string) => {
+    const date = new Date(dateStr);
+    return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+}
 const Todo = ({ task }: TodoProps) => {
    
     const refInputTitle = useRef<HTMLInputElement>(null);
@@ -55,7 +59,8 @@ const Todo = ({ task }: TodoProps) => {
         setIsEditing(true);
         setEditedTaskTitle(task.text);
         setEditedTaskDate(task.date);
-        setEditedTaskTime(formatTime(task.time));
+        //setEditedTaskTime(formatTime(task.time));
+        setEditedTaskTime(task.time);
     };
 
 
@@ -116,7 +121,7 @@ const Todo = ({ task }: TodoProps) => {
                 ) : (
                 <React.Fragment>
                    <span>{task.text}</span>
-                   <span>{new Date(task.date).toLocaleString()}</span>
+                   <span>{formatDateOnly(task.date)}</span>
                    <span>{task.time}</span>
                 </React.Fragment>   
             )}
