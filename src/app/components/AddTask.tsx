@@ -37,6 +37,7 @@ const AddTask = () => {
                     className = "flex-1 border px-4 py-2 rounded-lg focus:ourline-none fucus:boder-blue-400" 
                     onChange = {(e: ChangeEvent<HTMLInputElement>) => setTaskTitle(e.target.value)}
                     value = {taskTitle}
+                    style = {{ width: '200px' ,borderRadius: '10px' }}
                 />
                 <input 
                     type = "date"
@@ -46,12 +47,14 @@ const AddTask = () => {
                         setDeadlineDate(e.target.value);
                     }}
                     value = {formatDate(deadlineDate)}
+                    style = {{ width: '200px' ,borderRadius: '10px' }}
                 />
                 <input
                     type = "time"
                     className = "flex-1 border px-4 py-2 rounded-lg focus:ourline-none fucus:boder-blue-400"
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setDeadlineTime(e.target.value)}
                     value = {deadlineTime}
+                    style = {{ width: '10px' ,borderRadius: '10px' }}
                 />
             </div>
             <button className="w-full px-4 py-2 text-white bg-blue-500 rounded transform hover:bg-blue-400 hover:scale-95 duration-200">Add Task</button>
