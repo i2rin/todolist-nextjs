@@ -1,7 +1,5 @@
 import { Task } from './types';
 
-
-
 export const formatDate =(date: Date | string ): string => {
     const d = new Date(date);
     const year = d.getFullYear();
@@ -68,3 +66,13 @@ export const deleteTodo = async (id: string): Promise<Task[]> => {
 
     return res;
 }
+
+export const sortTasksByDate = (tasks: Task[]) => {
+    return tasks.sort((taskA, taskB) => {
+        const dateA = new Date(taskA.date).getTime();
+        const dateB = new Date(taskB.date).getTime();
+
+        return dateA - dateB; // 昇順にソート
+    });
+};
+

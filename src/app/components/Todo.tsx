@@ -21,12 +21,12 @@ export const formatDate = (date : Date | string) : string => {
     return [year, month, day].join('-');
 };
 
-export const formatTime = (date: Date | string) : string => {
-    if (!date) return '';
+export const formatTime = (time: string) : string => {
+    if (!time) return '';
 
-    const d = new Date(date);
-    let hours = '' + d.getHours();
-    let minutes = '' + d.getMinutes();
+    const t = new Date(time);
+    let hours = '' + t.getHours();
+    let minutes = '' + t.getMinutes();
 
     if (hours.length < 2) hours = '0' + hours;
     if (minutes.length < 2) minutes = '0' + minutes;
@@ -45,8 +45,9 @@ const Todo = ({ task }: TodoProps) => {
 
     const [isEditing, setIsEditing] = useState(false);
     const [editedTaskTitle, setEditedTaskTitle] = useState(task.text);
-    const [editedTaskDate, setEditedTaskDate] = useState(task.date);
+    const [editedTaskDate, setEditedTaskDate] = useState(formatDateOnly(task.date));
     const [editedTaskTime, setEditedTaskTime] = useState(formatTime(task.time));
+    //const [editedTaskTime, setEditedTaskTime] = useState(task.time);
 
     useEffect(() => {
         if (isEditing) 
@@ -65,7 +66,7 @@ const Todo = ({ task }: TodoProps) => {
 
 
     const handleSave = async () => {
-        const dateStr = formatDate(editedTaskDate);
+        const dateStr = formatDateOnly(editedTaskDate);
         const timeStr = formatTime(editedTaskTime);
         //const dateTimeStr = `${dateSrt}T${timeStr}`;
         //await editTodo(task.id, editedTaskTitle, dateTimeStr);
@@ -110,7 +111,8 @@ const Todo = ({ task }: TodoProps) => {
                    <input
                         ref = {refInputTime}
                         type="time" 
-                        value={formatTime(editedTaskTime)}
+                        //value={formatTime(editedTaskTime)}
+                        value={editedTaskTime} 
                         onChange={
                             (e: React.ChangeEvent<HTMLInputElement>) => setEditedTaskTime(e.target.value)
                         }
@@ -153,7 +155,3 @@ const Todo = ({ task }: TodoProps) => {
 };
 
 export default Todo;
-
-
-
-
