@@ -8,6 +8,19 @@ export const formatDate =(date: Date | string ): string => {
     return `${year}-${month}-${day}`;
 };
 
+export const formatTime = (time: string) : string => {
+    if (!time) return '';
+
+    const t = new Date(time);
+    let hours = '' + t.getHours();
+    let minutes = '' + t.getMinutes();
+
+    if (hours.length < 2) hours = '0' + hours;
+    if (minutes.length < 2) minutes = '0' + minutes;
+    return `${hours}:${minutes}`;
+};
+
+
 //ここからtaskを取得して表示する
 export const getAllTodos = async (): Promise<Task[]> => {
     const jsonData = await fetch('http://localhost:3001/tasks', {
@@ -17,8 +30,8 @@ export const getAllTodos = async (): Promise<Task[]> => {
 
     const formattedTasks = res.map(task => ({
         ...task,
-        date: formatDate(task.date)
-        //date: task.date
+        date: formatDate(task.date),
+        format: task.format
     }));
     return formattedTasks;
 }
@@ -37,7 +50,7 @@ export const addTodo = async (todo:Task): Promise<Task[]> => {
 }
 
 
-export const editTodo = async (id: string, newText: string, newDate: string, newTime: string): Promise<Task[]> => { const jsonData = await fetch(`http://localhost:3001/tasks/${id}`, {
+export const editTodo = async (id: string, newText: string, newDate: string, newTime: string, newFormat: string): Promise<Task[]> => { const jsonData = await fetch(`http://localhost:3001/tasks/${id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -45,7 +58,8 @@ export const editTodo = async (id: string, newText: string, newDate: string, new
         body: JSON.stringify({ 
             text: newText, 
             date: newDate,
-            time: newTime
+            time: newTime,
+            format: newFormat
             // dateTimeStr: newDateTimeStr,
        }) // 日付をISO文字列に変換
     });

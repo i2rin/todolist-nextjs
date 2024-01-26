@@ -48,6 +48,7 @@ const Todo = ({ task }: TodoProps) => {
     const [editedTaskDate, setEditedTaskDate] = useState(formatDateOnly(task.date));
     const [editedTaskTime, setEditedTaskTime] = useState(formatTime(task.time));
     //const [editedTaskTime, setEditedTaskTime] = useState(task.time);
+    const [editedTaskFormat, setEditedTaskFormat] = useState(task.format);
 
     useEffect(() => {
         if (isEditing) 
@@ -62,6 +63,7 @@ const Todo = ({ task }: TodoProps) => {
         setEditedTaskDate(task.date);
         //setEditedTaskTime(formatTime(task.time));
         setEditedTaskTime(task.time);
+        setEditedTaskFormat(task.format);
     };
 
 
@@ -70,7 +72,7 @@ const Todo = ({ task }: TodoProps) => {
         const timeStr = formatTime(editedTaskTime);
         //const dateTimeStr = `${dateSrt}T${timeStr}`;
         //await editTodo(task.id, editedTaskTitle, dateTimeStr);
-        await editTodo(task.id, editedTaskTitle, dateStr, timeStr);
+        await editTodo(task.id, editedTaskTitle, dateStr, timeStr, editedTaskFormat);
         setIsEditing(false);
     };
 
@@ -125,6 +127,7 @@ const Todo = ({ task }: TodoProps) => {
                    <span>{task.text}</span>
                    <span>{formatDateOnly(task.date)}</span>
                    <span>{task.time}</span>
+                   <span>{task.format}</span>
                 </React.Fragment>   
             )}
             <div className = "flex">

@@ -1,6 +1,6 @@
 import AddTask from '../app/components/AddTask'; 
 import TodoList from '../app/components/TodoList';
-import { formatDate, getAllTodos, sortTasksByDate } from "../app/pages/api";
+import { getAllTodos, sortTasksByDate } from "../app/pages/api";
 
 export default async function Home() {
     const tasks = await getAllTodos();

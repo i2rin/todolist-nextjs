@@ -10,6 +10,10 @@
     "json-server": "json-server --watch src/app/data/todos.json --port 3001"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "framer-motion": "^11.0.3",
     "json-server": "^1.0.0-alpha.21",
     "next": "14.0.4",
     "react": "^18",
