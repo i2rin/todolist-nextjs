@@ -6,7 +6,8 @@ import {v4 as uuidv4} from "uuid";
 
 const AddTask = () => {
     const [taskTitle, setTaskTitle] = useState("");
-    const [deadlineDate, setDeadlineDate] = useState<Date>(new Date());
+    //const [deadlineDate, setDeadlineDate] = useState<Date>(new Date());
+    const [deadlineDate, setDeadlineDate] = useState("");
     const [deadlineTime, setDeadlineTime] = useState("");
 
     const handleSubmit = async (e: FormEvent) => {
@@ -22,7 +23,8 @@ const AddTask = () => {
 
         await addTodo (newTask);     
         setTaskTitle("");
-        setDeadlineDate(new Date());
+        //setDeadlineDate(new Date());
+        setDeadlineDate("");
         setDeadlineTime("");
     }
     
@@ -40,10 +42,9 @@ const AddTask = () => {
                     type = "date"
                     className = "flex-2 border px-4 py-2 rounded-lg focus:ourline-none fucus:boder-blue-400"
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        setDeadlineDate(new Date(e.target.value));
+                        //setDeadlineDate(new Date(e.target.value));
+                        setDeadlineDate(e.target.value);
                     }}
-                    //value = {`${deadlineDate.getFullYear()}-${deadlineDate.getMonth() + 1} -${deadlineDate.getDate()}`}
-                    //value = {deadlineDate.toString()}
                     value = {formatDate(deadlineDate)}
                 />
                 <input

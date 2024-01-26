@@ -1,12 +1,28 @@
 import { Task } from './types';
 
+
+
+export const formatDate =(date: Date | string ): string => {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = ('0' + (d.getMonth() + 1)).slice(-2);
+    const day = ('0' + d.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+};
+
+//ここからtaskを取得して表示する
 export const getAllTodos = async (): Promise<Task[]> => {
     const jsonData = await fetch('http://localhost:3001/tasks', {
         cache: "no-store",
     });
-    const res = jsonData.json();
+    const res: Task[] = await jsonData.json();
 
-    return res;
+    const formattedTasks = res.map(task => ({
+        ...task,
+        date: formatDate(task.date)
+        //date: task.date
+    }));
+    return formattedTasks;
 }
 
 export const addTodo = async (todo:Task): Promise<Task[]> => {
@@ -23,7 +39,7 @@ export const addTodo = async (todo:Task): Promise<Task[]> => {
 }
 
 
-export const editTodo = async (id: string, newText: string, newDate: Date, newTime: string): Promise<Task[]> => { const jsonData = await fetch(`http://localhost:3001/tasks/${id}`, {
+export const editTodo = async (id: string, newText: string, newDate: string, newTime: string): Promise<Task[]> => { const jsonData = await fetch(`http://localhost:3001/tasks/${id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -31,7 +47,8 @@ export const editTodo = async (id: string, newText: string, newDate: Date, newTi
         body: JSON.stringify({ 
             text: newText, 
             date: newDate,
-            time: newTime,  
+            time: newTime
+            // dateTimeStr: newDateTimeStr,
        }) // 日付をISO文字列に変換
     });
     const res = jsonData.json();
@@ -41,6 +58,7 @@ export const editTodo = async (id: string, newText: string, newDate: Date, newTi
 
 export const deleteTodo = async (id: string): Promise<Task[]> => {
     const jsonData = await fetch(`http://localhost:3001/tasks/${id}`, {
+
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",

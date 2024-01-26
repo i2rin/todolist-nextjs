@@ -35,7 +35,10 @@ export const formatTime = (date: Date | string) : string => {
  
 const Todo = ({ task }: TodoProps) => {
    
-    const ref = useRef<HTMLInputElement>(null);
+    const refInputTitle = useRef<HTMLInputElement>(null);
+    const refInputDate = useRef<HTMLInputElement>(null);
+    const refInputTime = useRef<HTMLInputElement>(null);
+
     const [isEditing, setIsEditing] = useState(false);
     const [editedTaskTitle, setEditedTaskTitle] = useState(task.text);
     const [editedTaskDate, setEditedTaskDate] = useState(task.date);
@@ -44,7 +47,7 @@ const Todo = ({ task }: TodoProps) => {
     useEffect(() => {
         if (isEditing) 
         {
-            ref.current?.focus();
+            refInputTitle.current?.focus();
         }
     }, [isEditing]);
 
@@ -57,7 +60,11 @@ const Todo = ({ task }: TodoProps) => {
 
 
     const handleSave = async () => {
-        await editTodo(task.id, editedTaskTitle, editedTaskDate, editedTaskTime);
+        const dateStr = formatDate(editedTaskDate);
+        const timeStr = formatTime(editedTaskTime);
+        //const dateTimeStr = `${dateSrt}T${timeStr}`;
+        //await editTodo(task.id, editedTaskTitle, dateTimeStr);
+        await editTodo(task.id, editedTaskTitle, dateStr, timeStr);
         setIsEditing(false);
     };
 
@@ -75,7 +82,7 @@ const Todo = ({ task }: TodoProps) => {
            {isEditing ? (
                <React.Fragment>
                    <input 
-                        ref = {ref}
+                        ref = {refInputTitle}
                         type="text" 
                         value = {editedTaskTitle}
                         onChange = {
@@ -84,16 +91,19 @@ const Todo = ({ task }: TodoProps) => {
                         style = {{ width: '150px' ,borderRadius: '10px' }}  
                    />
                    <input 
+                        ref = {refInputDate}
                         type="date" 
                         //value = {formatDate(editedTaskDate)}
                         value = {editedTaskDate.toString()}
                         onChange = {
-                            (e: React.ChangeEvent<HTMLInputElement>) => setEditedTaskDate(e.target.value ? new Date(e.target.value) : new Date())
+                            //(e: React.ChangeEvent<HTMLInputElement>) => setEditedTaskDate(e.target.value ? new Date(e.target.value) : new Date())
+                            (e: React.ChangeEvent<HTMLInputElement>) => setEditedTaskDate(e.target.value)
                         }
                         className = "mr-2 py-1 px-2 rounded border-gray-400 border"
                         style = {{ width: '150px' }}
                    /> 
                    <input
+                        ref = {refInputTime}
                         type="time" 
                         value={formatTime(editedTaskTime)}
                         onChange={
