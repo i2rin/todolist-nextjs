@@ -1,5 +1,7 @@
 export interface Task {
     id: string;
-    text: string;    
-    dueDate: string;
+    text: string;   
+    date: string; 
+    time: string;
+    format: string;
 }
